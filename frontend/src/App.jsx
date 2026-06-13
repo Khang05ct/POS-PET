@@ -12,11 +12,22 @@ import CustomerPage from './pages/CustomerPage';
 import OrderPage from './pages/OrderPage';
 import SettingsPage from './pages/SettingsPage';
 import UserPage from './pages/UserPage';
+import ServicePage from './pages/ServicePage';
+import AppointmentPage from './pages/AppointmentPage';
+import PromotionPage from './pages/PromotionPage';
+import ReportPage from './pages/ReportPage';
 
 const ProtectedRoute = ({ children, adminOnly = false }) => {
   const { userInfo, loading } = useAuth();
 
-  if (loading) return <div className="flex h-screen items-center justify-center">Loading...</div>;
+  if (loading) return (
+    <div className="flex h-screen items-center justify-center bg-[#F8FAFB]">
+      <div className="text-center">
+        <div className="w-12 h-12 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-[14px] text-gray-500 font-medium">Đang tải...</p>
+      </div>
+    </div>
+  );
 
   if (!userInfo) {
     return <Navigate to="/login" replace />;
@@ -47,6 +58,10 @@ function AppRoutes() {
         <Route path="inventory" element={<ProtectedRoute adminOnly><InventoryPage /></ProtectedRoute>} />
         <Route path="customers" element={<CustomerPage />} />
         <Route path="orders" element={<OrderPage />} />
+        <Route path="services" element={<ProtectedRoute adminOnly><ServicePage /></ProtectedRoute>} />
+        <Route path="appointments" element={<AppointmentPage />} />
+        <Route path="promotions" element={<ProtectedRoute adminOnly><PromotionPage /></ProtectedRoute>} />
+        <Route path="reports" element={<ProtectedRoute adminOnly><ReportPage /></ProtectedRoute>} />
         <Route path="settings" element={<ProtectedRoute adminOnly><SettingsPage /></ProtectedRoute>} />
         <Route path="users" element={<ProtectedRoute adminOnly><UserPage /></ProtectedRoute>} />
       </Route>

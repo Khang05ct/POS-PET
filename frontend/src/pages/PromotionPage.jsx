@@ -1,0 +1,85 @@
+import { useState, useEffect } from 'react';
+import { TicketPercent, Tag, Gift, Users, Plus, Search, Calendar } from 'lucide-react';
+import StatCard from '../components/ui/StatCard';
+import StatusBadge from '../components/ui/StatusBadge';
+
+const PromotionPage = () => {
+  const [promotions, setPromotions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    // TODO: fetch from API /api/promotions
+    setLoading(false);
+  }, []);
+
+  return (
+    <div className="space-y-6 animate-fadeInUp">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Khuyến mãi</h1>
+          <p className="text-sm text-gray-500 mt-1">Quản lý chương trình khuyến mãi và mã giảm giá</p>
+        </div>
+        <button className="flex items-center gap-2 bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-sm">
+          <Plus size={18} />
+          Tạo khuyến mãi
+        </button>
+      </div>
+
+      {/* Banner */}
+      <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 rounded-2xl p-8 text-white relative overflow-hidden">
+        <div className="absolute -right-8 -top-8 w-40 h-40 bg-white/10 rounded-full"></div>
+        <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full"></div>
+        <div className="relative z-10">
+          <h2 className="text-xl font-bold">🎉 Chương trình khuyến mãi</h2>
+          <p className="text-emerald-100 mt-2 text-[14px] max-w-md">Tạo các chương trình giảm giá hấp dẫn để thu hút khách hàng mới và giữ chân khách hàng cũ.</p>
+        </div>
+      </div>
+
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <StatCard title="Chương trình KM" value="0" icon={TicketPercent} color="emerald" />
+        <StatCard title="Mã giảm giá" value="0" icon={Tag} color="blue" />
+        <StatCard title="Combo ưu đãi" value="0" icon={Gift} color="amber" />
+        <StatCard title="Ưu đãi thành viên" value="0" icon={Users} color="purple" />
+      </div>
+
+      {/* Table Area */}
+      <div className="bg-white rounded-2xl border border-gray-100 p-5">
+        <div className="flex items-center gap-4 mb-5">
+          <div className="relative flex-1">
+            <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Tìm kiếm khuyến mãi..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-300"
+            />
+          </div>
+          <select className="px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
+            <option value="">Tất cả loại</option>
+            <option value="percent">Giảm %</option>
+            <option value="fixed">Giảm cố định</option>
+            <option value="voucher">Voucher</option>
+          </select>
+        </div>
+
+        {/* Empty State */}
+        <div className="text-center py-16">
+          <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <TicketPercent size={28} className="text-emerald-400" />
+          </div>
+          <h3 className="text-[15px] font-bold text-gray-800 mb-1">Chưa có chương trình khuyến mãi</h3>
+          <p className="text-[13px] text-gray-400 mb-5">Tạo chương trình khuyến mãi đầu tiên để kích hoạt doanh số</p>
+          <button className="text-emerald-600 font-semibold text-[13px] hover:underline">
+            + Tạo khuyến mãi đầu tiên
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PromotionPage;
